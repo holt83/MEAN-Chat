@@ -1,6 +1,6 @@
 const rooms = require('../controllers/rooms.controller');
 
-module.exports = function(app) {
+exports.routes = function(app) {
   app.route('/api/rooms')
     .post(rooms.create)
     .get(rooms.list);

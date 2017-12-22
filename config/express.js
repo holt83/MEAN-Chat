@@ -25,7 +25,8 @@ module.exports = function() {
   app.set('views', './app/views');
   app.set('view engine', 'ejs');
 
-  require('../app/routes/rooms.routes')(app);
+  require('../app/routes/rooms.routes').routes(app);
+  require('../app/routes/messages.routes').routes(app);
 
   app.use(express.static(path.join('client', 'dist')));
   app.use(express.static(path.join('public')));
