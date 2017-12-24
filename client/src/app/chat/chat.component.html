@@ -1,3 +1,10 @@
-<p>
-  chat works!
-</p>
+<div *ngIf="room">
+  <h3>{{ room.title }}</h3>
+  <p>roomId: {{ room._id }}</p>
+  <div class="chat-window border border-primary rounded">
+    <ul>
+
+    </ul>
+  </div>
+</div>
+

@@ -71,7 +71,10 @@ const clients = [];
 exports.addClient = function(client) {
   clients.push(client);
 };
-// TODO: Find a way to remove client.
+exports.removeClient = function(clientId) {
+  // We take advantage of the socket.id which is a unique identifier for the session.
+  this.clients = clients.filter(client => client.id !== clientId);
+};
 
 /**
  * Notifies clients in room with roomId of a new message.
@@ -85,7 +88,7 @@ function notifyClients(roomId) {
     if (err) { return console.error(err); }
     else {
       toNotify.forEach(function(socket){
-        socket.emit('refresh', messages);
+        socket.emit('new message', messages);
       });
     }
   });

@@ -1,0 +1,25 @@
+/* Application-wide Styles */
+body {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+header {
+  padding: 20px;
+  border-bottom: 2px solid #eee;
+  position: relative;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.root-container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+main {
+  padding: 20px;
+}
+
+

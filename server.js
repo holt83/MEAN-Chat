@@ -21,18 +21,21 @@ const messages = require('./app/controllers/messages.controller');
 io.on('connection', function(socket) {
   console.log("New client connected");
 
-  // Log when the client disconnects again.
+  // Log when the client disconnects and tell messages controller to remove it.
   socket.on('disconnect', function(){
     console.log('user disconnected');
+    messages.removeClient(socket.id);
   });
 
   // The client uses this event when changing room and is expected to
-  // an initial one when first connecting.
-  socket.on('new room', function(data) {
-    socket.roomId = data.roomId;
+  // send an initial one when first connecting.
+  socket.on('join-room', function(roomId) {
+    socket.roomId = roomId;
+    console.log("A client joined a room with id: " + roomId);
   });
 
   // This socket is for streaming messages, so it's added to the
-  // message controller.
+  // message controller, which will notify client when new message
+  // are added.
   messages.addClient(socket);
 });

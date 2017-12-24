@@ -1,0 +1,24 @@
+/* Chat component private styling. */
+
+.chat-window {
+  width: 100%;
+  height: 600px;
+  overflow-y: auto;
+  padding: 10px 15px;
+
+  /* A neat CSS-only trick to get auto scroll to bottom in chat window */
+  /* Doesn't work in Firefox apparently. */
+  /* https://stackoverflow.com/questions/18614301/keep-overflow-div-scrolled-to-bottom-unless-user-scrolls-up#answer-44051405 */
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.chat-window ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-window ul li {
+  margin: 5px 0;
+}

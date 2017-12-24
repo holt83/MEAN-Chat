@@ -1,3 +1,11 @@
-<p>
-  user works!
-</p>
+<div class="user-wrapper" >
+  <div *ngIf="!user; else loggedIn">
+    <input #user class="form-control" placeholder="Enter a name">
+    <button type="button" class="btn btn-primary" (click)="login(user.value);">Log in</button>
+  </div>
+  <ng-template #loggedIn>
+    <span>logged in as <span class="username">{{ user }}</span></span>
+    <button type="button" class="btn btn-primary" (click)="logout();" >Log out</button>
+  </ng-template>
+</div>
+

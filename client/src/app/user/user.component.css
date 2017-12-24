@@ -1,0 +1,22 @@
+/* User component private styles */
+
+input {
+  /* Overriding some unwanted consequences of using bootstrap form-control */
+  width: auto;
+  display: inline-block;
+}
+
+button {
+  margin: 0 20px;
+}
+
+.user-wrapper {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 25px;
+}
+
+.username {
+  font-weight: bold;
+}

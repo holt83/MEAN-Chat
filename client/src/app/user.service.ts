@@ -8,14 +8,12 @@ export class UserService {
 
   constructor() { }
 
-  login(user: string): void {
-    user = user.trim();
-    if (!user) { return; }
+  setUser(user: string) {
     this.user = user;
   }
 
-  loggedIn(): boolean {
-    return !!this.user;
+  getUser(): string {
+    return this.user;
   }
 
 }
