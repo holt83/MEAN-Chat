@@ -68,9 +68,18 @@ exports.messageById = function(req, res, next, id) {
 
 // Socket client handling for exchanging messages.
 const clients = [];
+
 exports.addClient = function(client) {
   clients.push(client);
+
+  // The client uses this event when joining a room. It's used to keep
+  // track of which clients to send messages to, when a new one is added.
+  client.on('join room', function(roomId) {
+    client.roomId = roomId;
+    console.log("A client joined a room with id: " + roomId);
+  });
 };
+
 exports.removeClient = function(clientId) {
   // We take advantage of the socket.id which is a unique identifier for each session.
   this.clients = clients.filter(client => client.id !== clientId);

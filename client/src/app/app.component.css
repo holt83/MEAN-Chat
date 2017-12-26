@@ -1,6 +1,7 @@
 /* Application-wide Styles */
 body {
   font-family: Arial, Helvetica, sans-serif !important;
+  color: #474747;
 }
 
 header {
@@ -14,7 +15,7 @@ header h1 {
 }
 
 .root-container {
-  width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 

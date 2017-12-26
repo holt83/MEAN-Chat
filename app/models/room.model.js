@@ -10,6 +10,10 @@ const RoomSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
+  },
+  creator: {
+    type: String,
+    required: [true, "A chat room needs a title"]
   }
 });
 

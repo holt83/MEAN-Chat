@@ -4,6 +4,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as io from 'socket.io-client';
+import * as Rx from 'rxjs/Rx';
 
 import { Message } from './message';
 import { Room } from './room';
@@ -34,22 +35,32 @@ export class ChatService {
   }
 
   joinRoom(roomId: string): void {
-    this.socket.emit('join-room', roomId);
+    this.socket.emit('join room', roomId);
+  }
+
+  connectMessages(): Observable<Message[]> {
+    return Rx.Observable.create(observer => {
+      this.socket.on('new message', (data) => {
+        observer.next(data);
+      });
+      // Nothing to do on unsubscribe.
+    });
   }
 
   getMessages(roomId: string): Observable<Message[]> {
     const url = this.messagesUrl + '/' + roomId;
 
-    let observable = new Observable<Message[]>(observer => {
-      this.socket.on('new message', (data) => {
-        observer.next(data);
-      });
-      return () => {
-        this.socket.disconnect();
-      }
-    });
+    return this.http.get<Message[]>(url).pipe(
+      tap(messages => console.log('Fetched messages')),
+      catchError(this.handleError('getMessages roomId: ' + roomId, []))
+    );
+  }
 
-    return observable;
+  addMessage(message: Message): Observable<Message> {
+    return this.http.post<Message>(this.messagesUrl, message, httpOptions).pipe(
+      tap(_ => console.log("Added new message")),
+      catchError(this.handleError<Message>("addMessage failed"))
+    );
   }
 
   // TODO: Can we do at better job here?

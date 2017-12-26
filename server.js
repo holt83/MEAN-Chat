@@ -27,15 +27,8 @@ io.on('connection', function(socket) {
     messages.removeClient(socket.id);
   });
 
-  // The client uses this event when changing room and is expected to
-  // send an initial one when first connecting.
-  socket.on('join-room', function(roomId) {
-    socket.roomId = roomId;
-    console.log("A client joined a room with id: " + roomId);
-  });
-
   // This socket is for streaming messages, so it's added to the
-  // message controller, which will notify client when new message
+  // message controller, which will notify clients when new message
   // are added.
   messages.addClient(socket);
 });

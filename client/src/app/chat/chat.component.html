@@ -2,9 +2,29 @@
   <h3>{{ room.title }}</h3>
   <p>roomId: {{ room._id }}</p>
   <div class="chat-window border border-primary rounded">
-    <ul>
-
-    </ul>
+    <div> <!-- This is only used to negate flex direction. See comments in CSS. -->
+      <ul>
+        <li *ngFor="let message of messages">
+          <span class="username">{{ message.name }}</span>
+          <!-- The body of the message. -->
+          {{ message.message }}
+          <time [attr.datetime]="message.created"
+                class="message-created">
+            {{ message.created | date:'medium' }}
+          </time>
+        </li>
+      </ul>
+    </div>
   </div>
+  <!-- Send message controls. -->
+  <input #message
+         (keyup.enter)="addMessage(message.value); message.value=''"
+         class="form-control message border-primary"
+         placeholder="Enter a message" />
+  <button (click)="addMessage(message.value); message.value=''"
+          type="button"
+          class="btn btn-primary send">
+    Send
+  </button>
 </div>
 

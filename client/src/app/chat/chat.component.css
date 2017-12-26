@@ -2,12 +2,13 @@
 
 .chat-window {
   width: 100%;
-  height: 600px;
+  height: 450px;
   overflow-y: auto;
-  padding: 10px 15px;
+  padding: 15px;
+  padding-bottom: 10px;
 
-  /* A neat CSS-only trick to get auto scroll to bottom in chat window */
-  /* Doesn't work in Firefox apparently. */
+  /* A CSS-only trick to get auto scroll to bottom in chat window */
+  /* The template uses a class-less inner div as wrapper to negate reversion of content. */
   /* https://stackoverflow.com/questions/18614301/keep-overflow-div-scrolled-to-bottom-unless-user-scrolls-up#answer-44051405 */
   display: flex;
   flex-direction: column-reverse;
@@ -21,4 +22,45 @@
 
 .chat-window ul li {
   margin: 5px 0;
+}
+
+.chat-window ul li:last-of-type {
+  margin-bottom: 0;
+}
+
+.username {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.username::after {
+  content: "]:";
+}
+
+.username::before {
+  content: "[";
+}
+
+.message {
+  display: inline-block;
+  width: 85%;
+}
+
+.send {
+  float: right;
+  max-width: 19%;
+}
+
+.message, .send {
+  margin-top: 25px;
+}
+
+.message-created {
+  font-size: 70%;
+  margin-left: 5px;
+  font-style: italic;
+}
+
+.message-created::before {
+  content: " - ";
 }
