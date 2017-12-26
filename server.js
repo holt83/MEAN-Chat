@@ -15,7 +15,7 @@ server.on('listening', function() {
   console.log('Server listening at http://localhost:3000');
 });
 
-// This seems separate from express, so it's places here for now.
+// This seems separate from express, so it's placed here for now.
 // Maybe it should be moved to a socket.js config file?
 const messages = require('./app/controllers/messages.controller');
 io.on('connection', function(socket) {

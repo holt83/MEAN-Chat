@@ -72,7 +72,7 @@ exports.addClient = function(client) {
   clients.push(client);
 };
 exports.removeClient = function(clientId) {
-  // We take advantage of the socket.id which is a unique identifier for the session.
+  // We take advantage of the socket.id which is a unique identifier for each session.
   this.clients = clients.filter(client => client.id !== clientId);
 };
 
