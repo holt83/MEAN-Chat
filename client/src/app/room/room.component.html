@@ -1,3 +1,15 @@
-<p>
-  room works!
-</p>
+<div *ngIf="!room; else editRoom" class="create-room">
+  <h2>Create Room</h2>
+  <input #title class="form-control border-primary" placeholder="Enter title" />
+  <textarea
+    #desc
+    class="form-control border-primary"
+    placeholder="Enter description" rows="3">
+  </textarea>
+  <button type="button" class="btn btn-primary">Create</button>
+</div>
+<ng-template #editRoom>
+  <div class="edit-room">
+    <p>Room</p>
+  </div>
+</ng-template>

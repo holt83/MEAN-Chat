@@ -25,4 +25,6 @@ main {
   position: relative;
 }
 
-
+#app-title a {
+  text-decoration: none;
+}

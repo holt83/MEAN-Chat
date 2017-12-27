@@ -1,0 +1,9 @@
+/* Room component private styling. */
+
+h2, input, textarea {
+  margin-bottom: 20px;
+}
+
+textarea {
+  resize: none;
+}

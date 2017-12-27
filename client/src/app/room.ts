@@ -3,4 +3,5 @@ export class Room {
   title: string;
   description: string;
   created: string;
+  creator: string;
 }

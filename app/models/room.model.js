@@ -13,7 +13,7 @@ const RoomSchema = new Schema({
   },
   creator: {
     type: String,
-    required: [true, "A chat room needs a title"]
+    required: [true, "A chat room needs a creator"]
   }
 });
 

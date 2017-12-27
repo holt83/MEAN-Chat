@@ -1,6 +1,6 @@
 <h2>Rooms</h2>
 
-<button type="button" class="btn btn-primary create-room">Create Room</button>
+<button type="button" class="btn btn-primary create-room" routerLink="/rooms/new">Create Room</button>
 
 <ngb-accordion #roomAcc="ngbAccordion" class="container" [activeIds]="enabledPanels">
   <ngb-panel *ngFor="let room of rooms" [id]="'panel-' + room._id" [title]="room.title">

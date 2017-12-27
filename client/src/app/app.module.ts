@@ -9,7 +9,7 @@ import { UserService } from './user.service';
 import { UserComponent } from './user/user.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { ChatComponent } from './chat/chat.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { RoomComponent } from './room/room.component';
 
 @NgModule({
