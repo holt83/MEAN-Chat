@@ -67,22 +67,23 @@ exports.messageById = function(req, res, next, id) {
 };
 
 // Socket client handling for exchanging messages.
-const clients = [];
+let io;
 
-exports.addClient = function(client) {
-  clients.push(client);
-
-  // The client uses this event when joining a room. It's used to keep
-  // track of which clients to send messages to, when a new one is added.
+exports.setupClient = function(client) {
   client.on('join room', function(roomId) {
-    client.roomId = roomId;
+    // Uses socket.io ROOM API to keep track of which client to push messages to.
+    client.join(roomId);
     console.log("A client joined a room with id: " + roomId);
+  });
+  client.on('leave room', function(roomId) {
+    // Uses socket.io ROOM API to keep track of which client to push messages to.
+    client.leave(roomId);
+    console.log("A client left a room with id: " + roomId);
   });
 };
 
-exports.removeClient = function(clientId) {
-  // We take advantage of the socket.id which is a unique identifier for each session.
-  this.clients = clients.filter(client => client.id !== clientId);
+exports.setServer = function(server) {
+  io = server;
 };
 
 /**
@@ -91,16 +92,10 @@ exports.removeClient = function(clientId) {
  * @param roomId
  */
 function notifyClients(roomId) {
-  const toNotify = clients.filter(client => client.roomId === roomId);
-
   Message.find({ roomId: roomId }, 'name message created', (err, messages) => {
     if (err) { return console.error(err); }
     else {
-      toNotify.forEach(function(socket){
-        socket.emit('new message', messages);
-      });
+      io.to(roomId).emit('new message', messages);
     }
   });
 }
-
-exports.notifyClients = notifyClients;

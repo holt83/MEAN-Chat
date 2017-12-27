@@ -21,14 +21,13 @@ const messages = require('./app/controllers/messages.controller');
 io.on('connection', function(socket) {
   console.log("New client connected");
 
-  // Log when the client disconnects and tell messages controller to remove it.
   socket.on('disconnect', function(){
     console.log('user disconnected');
-    messages.removeClient(socket.id);
   });
 
-  // This socket is for streaming messages, so it's added to the
-  // message controller, which will notify clients when new message
-  // are added.
-  messages.addClient(socket);
+  // Let message controller setup events for joining/leaving chat rooms.
+  messages.setupClient(socket);
 });
+// Message controller also need to emit new message events when messages
+// are added to rooms.
+messages.setServer(io);
