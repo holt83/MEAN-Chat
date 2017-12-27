@@ -76,7 +76,6 @@ exports.setupClient = function(client) {
     console.log("A client joined a room with id: " + roomId);
   });
   client.on('leave room', function(roomId) {
-    // Uses socket.io ROOM API to keep track of which client to push messages to.
     client.leave(roomId);
     console.log("A client left a room with id: " + roomId);
   });
@@ -87,7 +86,7 @@ exports.setServer = function(server) {
 };
 
 /**
- * Notifies clients in room with roomId of a new message.
+ * Notifies clients in socket.io rooms with name roomId of new messages.
  *
  * @param roomId
  */
