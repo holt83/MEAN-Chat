@@ -16,26 +16,44 @@ const httpOptions = {
 @Injectable()
 export class ChatService {
 
+  // TODO: Does this work in every case (with Angular router in mind)?
   private socketUrl = window.location.origin;
   private roomsUrl = 'api/rooms';
   private messagesUrl = 'api/messages';
   private socket;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) { }
+
+  /**
+   * Connects a socket to the server to receive live stream of messages.
+   * Returns an observable to subscribe for updates.
+   *
+   * @returns {Observable<Message[]>}
+   */
+  connect(): Observable<Message[]> {
     this.socket = io(this.socketUrl);
-  }
 
-  joinRoom(roomId: string): void {
-    this.socket.emit('join room', roomId);
-  }
-
-  connectMessages(): Observable<Message[]> {
     return Rx.Observable.create(observer => {
       this.socket.on('new message', (data) => {
         observer.next(data);
       });
-      // Nothing to do on unsubscribe.
+      // Disconnect the socket when observer unsubscribes.
+      return () => {
+        this.socket.disconnect();
+      };
     });
+  }
+
+  joinRoom(roomId: string): void {
+    if (this.socket) {
+      this.socket.emit('join room', roomId);
+    }
+  }
+
+  leaveRoom(roomId: string): void {
+    if (this.socket) {
+      this.socket.emit('leave room', roomId);
+    }
   }
 
   getRoom(roomId: string): Observable<Room> {

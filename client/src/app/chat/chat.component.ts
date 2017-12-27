@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { Room } from '../room';
 import { Message } from '../message';
@@ -10,14 +10,13 @@ import { UserService } from '../user.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
 
   // A chat room can be initialized with a room.
   @Input() room: Room;
   // The messages in the current room.
   messages: Message[];
-  // The current message being entered.
-  message: Message;
+  private subscription;
 
   constructor(
     private chatService: ChatService,
@@ -25,19 +24,20 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Room might not be set yet.
-    // See: https://stackoverflow.com/questions/34396684/input-property-is-undefined-in-angular-2s-oninit
+    // Always connect to the socket on init.
+    // The stream of messages will first begin when we join a room.
+    this.subscription = this.chatService.connect().subscribe(
+      messages => this.messages = messages,
+      error => console.log(error)
+    );
+
+    // The room was passed in as an Input property.
     if (this.room) {
+      // Get latest messages manually first.
       this.chatService.getMessages(this.room._id).subscribe(messages => {
         this.messages = messages;
-
-        // The chat now contains the latest messages; subscribe to the stream
-        // of message updates provided by the chat service.
+        // Join the room to receive live updates of messages.
         this.chatService.joinRoom(this.room._id);
-        this.chatService.connectMessages().subscribe(
-          messages => this.messages = messages,
-          error => console.log(error)
-        );
       });
     }
   }
@@ -54,4 +54,7 @@ export class ChatComponent implements OnInit {
     this.chatService.addMessage({roomId, name, message} as Message).subscribe();
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }
