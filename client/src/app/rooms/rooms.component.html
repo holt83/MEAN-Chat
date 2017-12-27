@@ -1,3 +1,30 @@
-<p>
-  rooms works!
-</p>
+<h2>Rooms</h2>
+
+<button type="button" class="btn btn-primary create-room">Create Room</button>
+
+<ngb-accordion #roomAcc="ngbAccordion" class="container" [activeIds]="enabledPanels">
+  <ngb-panel *ngFor="let room of rooms" [id]="'panel-' + room._id" [title]="room.title">
+    <ng-template ngbPanelContent>
+
+      <!-- Room body -->
+      {{ room.description }}
+
+      <!-- Join/Leave Room controls -->
+      <button *ngIf="!currentRoom"
+              (click)="joinRoom(room)"
+              type="button"
+              class="btn btn-primary join-room">
+        Join Room
+      </button>
+      <button *ngIf="currentRoom"
+              (click)="leaveRoom()"
+              type="button"
+              class="btn btn-secondary leave-room">
+        Leave Room
+      </button>
+
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+
+<app-chat *ngIf="currentRoom" [room]="currentRoom" ></app-chat>

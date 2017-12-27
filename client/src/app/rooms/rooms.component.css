@@ -1,0 +1,12 @@
+/* Room component private styling */
+
+.btn.create-room {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+}
+
+.join-room, .leave-room {
+  display: block;
+  margin-top: 15px;
+}

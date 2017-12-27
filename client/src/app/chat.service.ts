@@ -25,15 +25,6 @@ export class ChatService {
     this.socket = io(this.socketUrl);
   }
 
-  getRoom(roomId: string): Observable<Room> {
-    const url = this.roomsUrl + '/' + roomId;
-
-    return this.http.get<Room>(url).pipe(
-      tap(_ => console.log('Fetched room with id: ' + roomId)),
-      catchError(this.handleError<Room>('getRoom id:' + roomId))
-    );
-  }
-
   joinRoom(roomId: string): void {
     this.socket.emit('join room', roomId);
   }
@@ -45,6 +36,29 @@ export class ChatService {
       });
       // Nothing to do on unsubscribe.
     });
+  }
+
+  getRoom(roomId: string): Observable<Room> {
+    const url = this.roomsUrl + '/' + roomId;
+
+    return this.http.get<Room>(url).pipe(
+      tap(_ => console.log('Fetched room with id: ' + roomId)),
+      catchError(this.handleError<Room>('getRoom id:' + roomId))
+    );
+  }
+
+  getRooms(): Observable<Room[]> {
+    return this.http.get<Room[]>(this.roomsUrl).pipe(
+      tap(_ => console.log('Fetched rooms')),
+      catchError(this.handleError<Room[]>('getRooms failed'))
+    );
+  }
+
+  addRoom(room: Room): Observable<Room> {
+    return this.http.post<Room>(this.roomsUrl, room, httpOptions).pipe(
+      tap(_ => console.log("Added new message")),
+      catchError(this.handleError<Room>("addMessage failed"))
+    );
   }
 
   getMessages(roomId: string): Observable<Message[]> {
