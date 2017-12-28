@@ -25,7 +25,7 @@ export class ChatService {
   constructor(private http: HttpClient) { }
 
   /**
-   * Connects a socket to the server to receive live stream of messages.
+   * Establish a socket connection to the server to receive live stream of messages.
    * Returns an observable to subscribe for updates.
    *
    * @returns {Observable<Message[]>}
@@ -75,6 +75,19 @@ export class ChatService {
   addRoom(room: Room): Observable<Room> {
     return this.http.post<Room>(this.roomsUrl, room, httpOptions).pipe(
       tap(_ => console.log("Added new message")),
+      catchError(this.handleError<Room>("addMessage failed"))
+    );
+  }
+
+  updateRoom(room: Room): Observable<Room> {
+    const url = this.roomsUrl + '/' + room._id;
+
+    // Ensure we don't try to update mongo id.
+    // TODO: Maybe this should be handled on the server.
+    delete room._id;
+
+    return this.http.put<Room>(url, room, httpOptions).pipe(
+      tap(_ => console.log("Updated room with id=" + room._id)),
       catchError(this.handleError<Room>("addMessage failed"))
     );
   }
