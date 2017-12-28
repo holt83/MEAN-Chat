@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { ChatService } from '../chat.service';
 import { UserService } from '../user.service';
@@ -15,21 +17,49 @@ export class RoomComponent implements OnInit {
 
   constructor(
     private chatService: ChatService,
-    private userService: UserService
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit() {
+    this.getRoom();
+  }
+
+  getRoom() {
+    const roomId: string = this.route.snapshot.paramMap.get('roomId');
+    this.chatService.getRoom(roomId).subscribe(
+      room => this.room = room
+    );
   }
 
   addRoom(title: string, description: string): void {
     const creator: string = this.userService.getUser();
     title = title.trim();
     description = description.trim();
-    // TODO: Better error handling/feedback about this.
+
     if (!creator || !title || !description) return;
+
     this.chatService.addRoom({ title, description, creator } as Room).subscribe(
-      room => this.room = room
+      () => this.goBack()
     );
+  }
+
+  updateRoom(title: string, description: string): void {
+    const creator: string = this.userService.getUser();
+    title = title.trim();
+    description = description.trim();
+
+    if (!creator || !title || !description || !this.room) return;
+
+    // Could have used a two-way binding to avoid this manual update.
+    this.room.title = title;
+    this.room.description = description;
+    this.chatService.updateRoom(this.room).subscribe(() => this.goBack());
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }

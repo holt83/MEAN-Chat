@@ -22,14 +22,24 @@ export class RoomsComponent implements OnInit {
   }
 
   getRooms(): void {
-    this.chatService.getRooms().subscribe(rooms => this.rooms = rooms);
+    this.chatService.getRooms().subscribe(
+      rooms => this.rooms = rooms
+    );
   }
 
   joinRoom(room: Room): void {
+    if (this.currentRoom) {
+      this.currentRoom = null;
+    }
     this.currentRoom = room;
   }
 
-  leaveRoom(): void {
+  leaveCurrentRoom(): void {
+    this.currentRoom = null;
+  }
+
+  panelChange(): void {
+    // Doing this here enables automatic leaving of current selected chat room.
     this.currentRoom = null;
   }
 }

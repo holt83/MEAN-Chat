@@ -55,6 +55,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // This will also disconnect the socket.
     this.subscription.unsubscribe();
   }
+
 }

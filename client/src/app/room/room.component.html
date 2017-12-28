@@ -1,14 +1,33 @@
-<div *ngIf="!room; else editRoom" class="create-room">
-  <h2>Create Room</h2>
-  <input #title class="form-control border-primary" placeholder="Enter title" />
-  <textarea
-    #desc
-    class="form-control border-primary"
-    placeholder="Enter description" rows="3"></textarea>
-  <button type="button" class="btn btn-primary">Create</button>
-</div>
-<ng-template #editRoom>
-  <div class="edit-room">
-    <p>Room</p>
-  </div>
-</ng-template>
+<h2>
+  {{ room ? 'Update ' : 'Create Room' }}
+  <em *ngIf="room">{{ room.title }}</em>
+</h2>
+
+<!-- Input controls -->
+<input #title
+       class="form-control border-primary"
+       placeholder="Enter title"
+       [value]="room ? room.title : ''"/>
+<textarea #desc
+          class="form-control border-primary"
+          placeholder="Enter description" rows="3"
+          [value]="room ? room.description : ''"></textarea>
+
+<!-- Manage room controls -->
+<button *ngIf="!room"
+        type="button"
+        class="btn btn-primary"
+        (click)="addRoom(title.value, desc.value)">
+  Create
+</button>
+<button *ngIf="room"
+        type="button"
+        class="btn btn-primary"
+        (click)="updateRoom(title.value, desc.value)">
+  Update
+</button>
+<button type="button"
+        class="btn btn-secondary"
+        (click)="goBack()">
+  Cancel
+</button>

@@ -6,7 +6,15 @@
   right: 20px;
 }
 
-.join-room, .leave-room {
-  display: block;
-  margin-top: 15px;
+.join-room, .leave-room, .update-room {
+  display: inline-block;
+  min-width: 100px;
+}
+
+.leave-current-room {
+  margin: 25px 0;
+}
+
+.chat-wrapper {
+  margin-bottom: 200px;
 }
