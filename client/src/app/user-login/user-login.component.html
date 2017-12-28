@@ -1,0 +1,17 @@
+<div class="container">
+  <h3>Please log in</h3>
+
+  <input #username
+         class="form-control border-primary"
+         placeholder="Enter username"/>
+  <input #password
+         type="password"
+         class="form-control border-primary"
+         placeholder="Enter password"
+         (keyup.enter)="logIn(username.value, password.value); password.value=''"/>
+  <button type="button"
+          class="btn btn-primary log-in"
+          (click)="logIn(username.value, password.value); password.value=''">
+    Log in
+  </button>
+</div>

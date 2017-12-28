@@ -27,6 +27,7 @@ module.exports = function() {
 
   require('../app/routes/rooms.routes').routes(app);
   require('../app/routes/messages.routes').routes(app);
+  require('../app/routes/users.routes').routes(app);
 
   app.use(express.static(path.join('public')));
   app.use(express.static(path.join('client', 'dist')));

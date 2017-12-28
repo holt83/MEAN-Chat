@@ -4,12 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { RoomComponent } from './room/room.component';
 import { RoomsComponent } from './rooms/rooms.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'rooms', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'rooms', component: RoomsComponent },
   { path: 'rooms/new', component: RoomComponent },
-  { path: 'rooms/:roomId', component: RoomComponent }
+  { path: 'rooms/:roomId', component: RoomComponent },
+  { path: 'login', component:  UserLoginComponent }
 ];
 
 @NgModule({

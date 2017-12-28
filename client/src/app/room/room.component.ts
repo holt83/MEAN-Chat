@@ -28,13 +28,18 @@ export class RoomComponent implements OnInit {
 
   getRoom() {
     const roomId: string = this.route.snapshot.paramMap.get('roomId');
+
+    // This component supports being initialized with a roomId router
+    // parameter, but might not be.
+    if (!roomId) return;
+
     this.chatService.getRoom(roomId).subscribe(
       room => this.room = room
     );
   }
 
   addRoom(title: string, description: string): void {
-    const creator: string = this.userService.getUser();
+    const creator: string = this.userService.user.username;
     title = title.trim();
     description = description.trim();
 
@@ -46,7 +51,7 @@ export class RoomComponent implements OnInit {
   }
 
   updateRoom(title: string, description: string): void {
-    const creator: string = this.userService.getUser();
+    const creator: string = this.userService.user.username;
     title = title.trim();
     description = description.trim();
 

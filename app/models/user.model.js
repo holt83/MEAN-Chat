@@ -13,7 +13,7 @@ const UserSchema = new Schema({
     // Custom validator.
     validate: [
       function (password) {
-        return password.length >= 6;
+        return password.length >= 4;
       },
       'Password should be longer'
     ]
@@ -26,7 +26,7 @@ const UserSchema = new Schema({
 
 // Custom static method.
 UserSchema.statics.findOneByUsername = function (username, callback) {
-  this.findOne({ username: new RegExp(username, 'i')}, callback);
+  this.findOne({ username: username }, callback);
 };
 
 // Custom instance method; Acts on an instance of the model.

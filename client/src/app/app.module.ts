@@ -11,6 +11,7 @@ import { RoomsComponent } from './rooms/rooms.component';
 import { ChatComponent } from './chat/chat.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RoomComponent } from './room/room.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 @NgModule({
   declarations: [
@@ -18,12 +19,13 @@ import { RoomComponent } from './room/room.component';
     UserComponent,
     RoomsComponent,
     ChatComponent,
-    RoomComponent
+    RoomComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    NgbModule.forRoot(),
+    NgbModule.forRoot(), // NG Boostrap
     AppRoutingModule
   ],
   providers: [ChatService, UserService],

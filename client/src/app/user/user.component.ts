@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UserService } from '../user.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-user',
@@ -9,21 +11,24 @@ import { UserService } from '../user.service';
 })
 export class UserComponent implements OnInit {
 
-  user: string;
+  user: User;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.user = this.userService.getUser();
+    this.user = this.userService.user;
   }
 
-  login(user: string): void {
-    this.userService.setUser(user);
-    this.user = user;
+  logOut(): void {
+    this.userService.unAuthenticateUser();
+    this.router.navigateByUrl('login');
   }
 
-  logout(): void {
-    this.user = null;
+  logIn(): void {
+    this.router.navigateByUrl('login');
   }
 
 }

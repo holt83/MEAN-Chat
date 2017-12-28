@@ -51,3 +51,13 @@
 <div class="chat-wrapper">
   <app-chat *ngIf="currentRoom" [room]="currentRoom" ></app-chat>
 </div>
+
+<ng-template #userLogin>
+  <input #username
+         class="form-control border-primary"
+         placeholder="Enter title"/>
+  <input #password
+         type="password"
+         class="form-control border-primary"
+         placeholder="Enter title"/>
+</ng-template>

@@ -43,7 +43,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   addMessage(message: string): void {
-    const name: string = this.userService.getUser();
+    const name: string = this.userService.user.username;
     message = message.trim();
     // Need a user and message to create post.
     // TODO: Better error handling/feedback about this.
