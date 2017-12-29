@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientModule } from "@angular/common/http";
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { UserLoginComponent } from './user-login.component';
+
+import { UserService } from '../user.service';
 
 describe('UserLoginComponent', () => {
   let component: UserLoginComponent;
@@ -8,7 +13,10 @@ describe('UserLoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserLoginComponent ]
+      imports: [ HttpClientModule, RouterTestingModule ],
+      providers: [ UserService ],
+      declarations: [ UserLoginComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

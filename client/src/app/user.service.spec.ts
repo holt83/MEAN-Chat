@@ -1,11 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientModule } from "@angular/common/http";
 
 import { UserService } from './user.service';
 
 describe('UserService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [UserService]
+      imports: [ HttpClientModule],
+      providers: [ UserService ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     });
   });
 
