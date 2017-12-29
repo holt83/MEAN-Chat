@@ -47,6 +47,8 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "nodemon": "^1.14.3",
     "protractor": "~5.1.2",
+    "should": "^11.1.1",
+    "supertest": "^2.0.1",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "2.4.2"

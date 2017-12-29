@@ -31,3 +31,5 @@ io.on('connection', function(socket) {
 // Message controller also need to emit new message events when messages
 // are added to rooms.
 messages.setServer(io);
+
+module.exports = server;
